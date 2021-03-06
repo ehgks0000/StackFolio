@@ -5,7 +5,6 @@ interface Colorset {
     text: string
     border: string
     accent: string
-    disabled: string
 }
 
 declare module 'styled-components' {
@@ -15,9 +14,9 @@ declare module 'styled-components' {
 
         // neutral color
         title: string;
+        disable: string;
         divider: string;
         tableHeader: string;
-        disable: string;
 
         // //point-color
         default: Colorset;
