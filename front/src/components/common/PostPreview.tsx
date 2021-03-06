@@ -1,4 +1,4 @@
-import { getPostData, PostData } from 'db/Post';
+import { getPostData, PostData } from 'db/stubs/Post';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Text from 'components/material/Text';

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getQuestionData, QuestionData } from 'db/Question'
+import { getQuestionData, QuestionData } from 'db/stubs/Question'
 import QuestionPreview from 'components/common/QuestionPreview';
 import styled from 'styled-components';
 import SearchField from 'components/search/SearchField';

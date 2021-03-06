@@ -12,6 +12,7 @@ import { Button } from 'components/material/Button';
 import ModalBackgroundImg from 'assets/modal_bg.png';
 import media from 'styles/media';
 import TextButton from 'components/material/TextButton';
+import { Auth } from '../../db'
 
 const ModalBackground = styled.div`
     position: fixed; /* Stay in place */
@@ -59,20 +60,30 @@ const EmailField = styled.div`
     }
 `
 //이메일 주소 오류 시 메세지
-const EmailErrorMessage = styled.div`
+const EmailMessage = styled.div`
     position: relative;
     display: flex;
     align-items: center;
     color: #333;
-    background-color: #F39797;
     opacity: 0.65;
     box-shadow: 1px 1px 2px grey;
     margin-top:3px;
     height: 35px;
-    width: 50%;
+    min-width: 50%;
+    max-width: 60%;
+    white-space: nowrap;
     padding: 0 10px;
     font-size: 14px;
 `
+const EmailErrorMessage = styled(EmailMessage)`
+    width: 50%;
+    background-color: #F39797;
+`
+const EmailVerifyMessage = styled(EmailMessage)`
+    width: 60%;
+    background-color: #FFD3A5;
+`
+
 const SocialButtonWrapper = styled.div`
     padding: 50px 0;
     & > button:nth-child(n+2){
@@ -103,6 +114,7 @@ const checkIsValidEmail = (address:string) => {
 }
 
 const SignIn = () => {
+    const [readOnly, setReadOnly] = useState<boolean>(false)
     // modal 바깥 부분 클릭 시 숨기기
     const [display, toggleDisplay] = useRecoilState(toggleSignInModalState);
     const ref = useRef(null);
@@ -113,8 +125,9 @@ const SignIn = () => {
     const [isSignInMode, setIsSignInMode] = useState<Boolean>(true);
     const toggleIsSignInMode = () => setIsSignInMode(prev => !prev);
 
-    // Show Error message 
+    // Show message 
     const [showErrorMessage, setShowErrorMessage] = useState<Boolean>(false);
+    const [showVerifyMessage, setShowVerifyMessage] = useState<Boolean>(false)
 
     const [email, setEmail] = useState('');
     const onEmailChange = ({target: {value}}: React.ChangeEvent<HTMLInputElement>) => {
@@ -122,17 +135,38 @@ const SignIn = () => {
     }
 
     // 로그인 버튼 클릭 시
-    const onSignInClicked = () => {
+    const onSignInClicked = async () => {
         const isValid = checkIsValidEmail(email);
         setShowErrorMessage(!isValid);
-        // 시간 지나면 없어지게 할까요?
-        // setTimeout(()=>setShowErrorMessage(false), 3000);
+        try {
+            const { status } = await Auth.google.signIn(email)
+            if (status === 201) alert('메일함을 확인해주세요.')
+        } catch ({ response }) {
+            if (response.status === 400) alert('올바르지 않은 이메일입니다.')
+            else if (response.status === 500) alert('net err')
+        }
+        // 시간 지나면 없어지게 할까요? -> 나중에 필요하면 추가하져
     }
 
     // 회원가입 버튼 클릭 시
-    const onSignUpClicked = () => {
-        const isValid = checkIsValidEmail(email);
-        setShowErrorMessage(!isValid);
+    const onSignUpClicked = async () => {
+        setReadOnly(true)
+        setShowVerifyMessage(false)
+        const isValid = checkIsValidEmail(email)
+        if (!isValid) {
+            setShowErrorMessage(!isValid)
+        } else {
+            // TODO: alert -> UI
+            try {
+                const { status } = await Auth.google.register(email)
+                if (status === 201) setShowVerifyMessage(true)
+                setEmail('')
+            } catch ({ response }) {
+                if (response.status === 400) alert('이미 가입된 이메일입니다.')
+                else alert('network err')
+            }
+        }
+        setReadOnly(false)
     }
     
     return (
@@ -148,7 +182,8 @@ const SignIn = () => {
                             height={36}
                             value={email}
                             onChange={onEmailChange}
-                            fullWidth 
+                            fullWidth
+                            readOnly={readOnly}
                             placeholder="이메일 주소를 입력하세요." 
                         />
                          <Button
@@ -162,6 +197,11 @@ const SignIn = () => {
                             <EmailErrorMessage>
                                 올바르지 않은 메일 형식입니다.
                             </EmailErrorMessage>
+                        }
+                        {showVerifyMessage &&
+                            <EmailVerifyMessage>
+                                회원가입 링크가 이메일로 전송되었습니다.
+                            </EmailVerifyMessage>
                         }
                         <Text right>
                             {isSignInMode ? "신규 사용자이신가요?" : "계정이 이미 있으신가요?"} &nbsp;

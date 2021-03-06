@@ -1,6 +1,6 @@
 import { Box } from 'components/material/Box';
 import Text from 'components/material/Text';
-import { QuestionData } from 'db/Question';
+import { QuestionData } from 'db/stubs/Question';
 import React from 'react';
 import { IconType } from 'react-icons';
 import { BiLike } from 'react-icons/bi';

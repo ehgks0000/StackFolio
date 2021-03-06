@@ -3,8 +3,8 @@ import PostPreview from 'components/common/PostPreview';
 import Text from 'components/material/Text';
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { PostData } from 'db/Post';
-import { getTopicData } from 'db/Topic';
+import { PostData } from 'db/stubs/Post';
+import { getTopicData } from 'db/stubs/Topic';
 import media from 'styles/media';
 
 const TopicWrapper = styled.div`

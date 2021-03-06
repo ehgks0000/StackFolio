@@ -6,4 +6,7 @@ node_modules
 env
 
 # local settings
-.eslintcache
+**/.eslintcache
+**/.env*
+**/yarn.lock
+**/package-lock.json

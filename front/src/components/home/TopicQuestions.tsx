@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Box } from 'components/material/Box';
 import Text from 'components/material/Text';
 import styled from 'styled-components';
-import { getTopicQuestionsData } from 'db/TopicQuestions';
+import { getTopicQuestionsData } from 'db/stubs/TopicQuestions';
 import media from 'styles/media';
 import QuestionPreview from 'components/common/QuestionPreview';
-import { QuestionData } from 'db/Question';
+import { QuestionData } from 'db/stubs/Question';
 
 const TopicWrapper = styled.div`
     width: 100%;

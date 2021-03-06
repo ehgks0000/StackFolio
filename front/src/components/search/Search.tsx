@@ -1,7 +1,7 @@
 import SearchField from 'components/search/SearchField';
 import { Box } from 'components/material/Box';
-import { PostData } from 'db/Post';
-import { SearchData, getSearchData } from 'db/Search';
+import { PostData } from 'db/stubs/Post';
+import { SearchData, getSearchData } from 'db/stubs/Search';
 import React, { useEffect, useState } from 'react';
 import { Button } from 'components/material/Button';
 

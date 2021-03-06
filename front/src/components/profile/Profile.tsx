@@ -3,7 +3,7 @@ import { Box } from 'components/material/Box';
 import { Button } from 'components/material/Button';
 import { Number } from 'components/material/Number';
 import {Title, Subtitle, Contents} from 'components/material/Text';
-import { getUserProfileData, User_Profile } from 'db/User_Profile';
+import { getUserProfileData, User_Profile } from 'db/stubs/User_Profile';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import media from 'styles/media';
