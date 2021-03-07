@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Box } from 'components/material/Box';
-import { PostData } from 'db/Post';
-import { getTopicData } from 'db/Topic';
+import { PostData } from 'db/stubs/Post';
+import { getTopicData } from 'db/stubs/Topic';
 import PostPreview from 'components/common/PostPreview';
 import styled from 'styled-components';
 

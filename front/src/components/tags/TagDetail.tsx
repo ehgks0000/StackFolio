@@ -1,6 +1,6 @@
 import MainWrapper from 'components/common/MainWrapper';
 import Text from 'components/material/Text';
-import { getTagData } from 'db/Tag';
+import { getTagData } from 'db/stubs/Tag';
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import media from 'styles/media';
