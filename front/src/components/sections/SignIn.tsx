@@ -33,7 +33,6 @@ const Modal = styled.div`
         position: initial;
         margin: 20% auto;
     `}
-    
     background-color: #fefefe;
     padding: 20px 30px;
     border: 1px solid #888;
@@ -62,14 +61,15 @@ const EmailField = styled.div`
 interface sizePropsType {
     size: number 
 }
-const fadeIn = keyframes`
-    from {
-        height: 0px;
-        opacity: 0; 
+const fadeOut = keyframes`
+    0% {
+        opacity: .65; 
     }
-    to {
-        height: 35px;
-        opacity: 0.65;
+    67% {
+        opacity: .65;
+    }
+    100% {
+        opacity: 0;
     }
 `
 const EmailMessage = styled.div<sizePropsType>`
@@ -85,7 +85,7 @@ const EmailMessage = styled.div<sizePropsType>`
     padding: 0 10px;
     font-size: 14px;
     height: 35px;
-    animation: ${fadeIn} 0.5s
+    animation: ${fadeOut} 1.5s forwards;
 `
 const EmailErrorMessage = styled(EmailMessage)`
     background-color: #F39797;
@@ -126,6 +126,8 @@ const checkIsValidEmail = (address:string) => {
 const SignIn = () => {
     const [readOnly, setReadOnly] = useState<boolean>(false)
     const [message, setMessage] = useState<string>('')
+    //const [timer, setTimer] = useState<NodeJS.Timeout>(setTimeout(()=>{}, 1))
+    let timer: NodeJS.Timeout = setTimeout(() => {}, 0)
     // modal 바깥 부분 클릭 시 숨기기
     const [display, toggleDisplay] = useRecoilState(toggleSignInModalState);
     const ref = useRef(null);
@@ -145,6 +147,7 @@ const SignIn = () => {
         setEmail(value);
     }
     const resetMessage = () => {
+        clearTimeout(timer)
         setMessage('')
         setShowVerifyMessage(false)
         setShowErrorMessage(false)
@@ -153,6 +156,9 @@ const SignIn = () => {
         resetMessage()
         callback(true)
         setMessage(msg)
+        timer = setTimeout(() => {
+            resetMessage()
+        }, 1550)
     }
     // 로그인 버튼 클릭 시
     const onSignInClicked = async () => {
