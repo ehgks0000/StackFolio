@@ -25,12 +25,12 @@ const TestComponent = (): ReactElement => {
       username,
       bio,
     }
-    console.log(loginInfo)
     try {
       const { status, data } = await Auth.register(loginInfo)
       if (status === 201) {
         alert('[DEBUG] 가입에 성공했습니다.')
         sessionStorage.setItem('token', data.accessToken)
+        // TODO: 나중에 어떻게 동작할지 몰라서 일단 그냥 둠
       }
     } catch ({ response }) {
       if (response.status === 400) alert('[DEBUG] 올바르지 않은 정보입니다. 여기 닉네임 글자수 제한 이런 거 있어보임.')
@@ -44,6 +44,7 @@ const TestComponent = (): ReactElement => {
       history.goBack()
     }
   }, [])
+
   return (
     <div>
       <form onSubmit={handleSubmit}>

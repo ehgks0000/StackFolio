@@ -4,8 +4,6 @@ import Home from 'components/home/Home';
 import Playground from './Playground';
 import React from 'react';
 import Search from './search/Search';
-import { Box } from './material/Box';
-import styled from 'styled-components';
 import Tags from './tags/Tags';
 import TagDetail from './tags/TagDetail';
 import QuestionDetails from './questions/QuestionDetails';
