@@ -1,9 +1,9 @@
 import { toggleSignInModalState } from 'atoms/signInModal';
 import { Box } from 'components/material/Box';
 import Text, { Subtitle } from 'components/material/Text';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useRecoilState } from 'recoil';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { IoLogoFacebook, IoLogoGithub } from 'react-icons/io5';
 import { FcGoogle } from 'react-icons/fc';
 import Separator from 'components/material/Separator';
@@ -12,7 +12,6 @@ import { Button } from 'components/material/Button';
 import ModalBackgroundImg from 'assets/modal_bg.png';
 import media from 'styles/media';
 import TextButton from 'components/material/TextButton';
-import { EmailErrorMessage, EmailVerifyMessage } from '../blocks/MessageBox'
 import { Auth } from '../../db'
 
 const ModalBackground = styled.div`
@@ -59,6 +58,40 @@ const EmailField = styled.div`
         height: 35px;
         width: 6rem;
     }
+`
+interface sizePropsType {
+    size: number 
+}
+const fadeIn = keyframes`
+    from {
+        height: 0px;
+        opacity: 0; 
+    }
+    to {
+        height: 35px;
+        opacity: 0.65;
+    }
+`
+const EmailMessage = styled.div<sizePropsType>`
+    width: ${props => props.size * 10 + 5}px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    color: #333;
+    opacity: 0.65;
+    box-shadow: 1px 1px 2px grey;
+    margin-top: 3px;
+    white-space: nowrap;
+    padding: 0 10px;
+    font-size: 14px;
+    height: 35px;
+    animation: ${fadeIn} 0.5s
+`
+const EmailErrorMessage = styled(EmailMessage)`
+    background-color: #F39797;
+`
+const EmailVerifyMessage = styled(EmailMessage)`
+    background-color: #FFD3A5;
 `
 
 const SocialButtonWrapper = styled.div`
